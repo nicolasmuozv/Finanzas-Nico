@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -29,6 +30,7 @@ body {
   border-top: 0.5px solid #E5E7EB;
   display: flex; z-index: 50;
   padding-bottom: env(safe-area-inset-bottom);
+  max-width: 480px; margin: 0 auto;
 }
 .tab {
   flex: 1; background: none; border: none;
@@ -42,12 +44,8 @@ body {
   padding: 12px 4px 16px;
   display: flex; justify-content: space-between; align-items: center;
 }
-.month-selector {
-  font-size: 13px; color: #6E6E73;
-  display: flex; align-items: center; gap: 6px;
-  background: white; padding: 6px 12px; border-radius: 100px;
-  border: none; cursor: pointer; font-family: inherit;
-}
+.header-info { font-size: 14px; color: #6E6E73; }
+.header-info .day { font-size: 11px; color: #8E8E93; margin-left: 4px; }
 .action-btn {
   background: white; border: none;
   width: 36px; height: 36px; border-radius: 50%;
@@ -57,42 +55,72 @@ body {
 }
 .balance-card {
   background: linear-gradient(135deg, #042C53 0%, #0C447C 100%);
-  border-radius: 18px; padding: 20px;
+  border-radius: 18px; padding: 18px;
   color: white; margin-bottom: 14px;
   box-shadow: 0 4px 20px rgba(4, 44, 83, 0.25);
 }
-.balance-card .label { font-size: 12px; opacity: 0.7; margin: 0 0 4px; }
+.balance-card .label { font-size: 11px; opacity: 0.7; margin: 0 0 4px; text-transform: uppercase; letter-spacing: 0.3px; }
 .balance-card .amount { font-size: 32px; font-weight: 600; margin: 0; letter-spacing: -0.5px; }
-.balance-card .meta { font-size: 11px; opacity: 0.6; margin: 4px 0 0; }
-.balance-stats {
-  display: flex; gap: 12px;
-  padding-top: 14px; margin-top: 14px;
-  border-top: 0.5px solid rgba(255,255,255,0.18);
+.balance-card .meta { font-size: 11px; opacity: 0.6; margin: 6px 0 0; }
+.summary-cards {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 8px; margin-bottom: 16px;
 }
-.balance-stats > div { flex: 1; }
-.balance-stats .stat-label { font-size: 10px; opacity: 0.6; margin: 0 0 2px; text-transform: uppercase; letter-spacing: 0.3px; }
-.balance-stats .stat-value { font-size: 14px; font-weight: 500; margin: 0; }
+.summary-card {
+  border-radius: 14px; padding: 12px;
+}
+.summary-card.green { background: #E1F5EE; }
+.summary-card.red   { background: #FCEBEB; }
+.summary-card .sc-label {
+  font-size: 10px; margin: 0 0 4px;
+  text-transform: uppercase; letter-spacing: 0.3px;
+}
+.summary-card.green .sc-label { color: #0F6E56; }
+.summary-card.red   .sc-label { color: #A32D2D; }
+.summary-card .sc-value { font-size: 18px; font-weight: 600; margin: 0; }
+.summary-card.green .sc-value { color: #04342C; }
+.summary-card.red   .sc-value { color: #501313; }
+.summary-card .sc-meta { font-size: 10px; margin: 4px 0 0; }
+.summary-card.green .sc-meta { color: #0F6E56; }
+.summary-card.red   .sc-meta { color: #A32D2D; }
 .section-title {
-  font-size: 13px; color: #6E6E73; font-weight: 500;
+  font-size: 12px; color: #6E6E73; font-weight: 500;
   margin: 0 4px 8px; text-transform: uppercase; letter-spacing: 0.3px;
 }
-.quick-actions {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 8px; margin-bottom: 18px;
+.cat-list {
+  background: white; border-radius: 14px;
+  padding: 4px 0; margin-bottom: 16px;
 }
-.quick-btn {
-  background: white; border: none; border-radius: 14px;
-  padding: 14px 4px;
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
-  cursor: pointer; transition: transform 0.1s;
-  font-size: 11px; color: #1D1D1F; font-family: inherit;
+.cat-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 0.5px solid #F2F2F7;
+  cursor: pointer;
 }
-.quick-btn:active { transform: scale(0.94); }
-.quick-btn .icon-circle {
-  width: 36px; height: 36px; border-radius: 50%;
+.cat-item:last-child { border-bottom: none; }
+.cat-item .ci-icon {
+  width: 28px; height: 28px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 18px;
+  font-size: 14px; flex-shrink: 0;
 }
+.cat-item .ci-info { flex: 1; min-width: 0; }
+.cat-item .ci-name { font-size: 13px; margin: 0; font-weight: 500;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cat-item .ci-bar {
+  background: #F2F2F7; height: 4px; border-radius: 2px;
+  margin-top: 4px; overflow: hidden;
+}
+.cat-item .ci-bar > div { height: 100%; transition: width 0.3s; }
+.cat-item .ci-vals { text-align: right; min-width: 80px; flex-shrink: 0; }
+.cat-item .ci-amount { font-size: 14px; font-weight: 600; margin: 0; }
+.cat-item .ci-status { font-size: 10px; color: #8E8E93; margin: 0; }
+.amount-good    { color: #0F6E56; }
+.amount-warning { color: #BA7517; }
+.amount-over    { color: #DC2626; }
+.bar-good    { background: #1D9E75; }
+.bar-warning { background: #BA7517; }
+.bar-over    { background: #DC2626; }
 .icon-bencina { background: #FFE5D6; color: #D85A30; }
 .icon-comida  { background: #FEF3C7; color: #BA7517; }
 .icon-salidas { background: #F4C0D1; color: #993556; }
@@ -103,33 +131,18 @@ body {
 .icon-corte   { background: #FFE4E6; color: #BE185D; }
 .icon-fijos   { background: #FEE2E2; color: #B91C1C; }
 .icon-ahorro  { background: #CFFAFE; color: #0E7490; }
-.card {
-  background: white; border-radius: 14px;
-  overflow: hidden; margin-bottom: 16px;
-  padding: 4px 14px;
+.fab {
+  position: fixed; bottom: calc(80px + env(safe-area-inset-bottom));
+  right: 16px;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: #042C53; color: white;
+  border: none; font-size: 26px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 49;
+  box-shadow: 0 6px 16px rgba(4, 44, 83, 0.4);
+  font-family: inherit; line-height: 1;
 }
-.budget-row {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 10px 0; font-size: 13px;
-}
-.budget-row .label { color: #6E6E73; }
-.budget-row .vals  { color: #1D1D1F; font-weight: 500; font-size: 12px; }
-.bar {
-  height: 4px; background: #E5E7EB;
-  border-radius: 2px; overflow: hidden;
-  margin-top: -4px; margin-bottom: 4px;
-}
-.bar > div { height: 100%; transition: width 0.3s; }
-.bar > div.over { background: #DC2626 !important; }
-.movements-header {
-  display: flex; justify-content: space-between; align-items: center;
-  margin: 0 4px 8px;
-}
-.movements-header .section-title { margin: 0; }
-.see-all {
-  font-size: 12px; color: #185FA5; font-weight: 500;
-  background: none; border: none; cursor: pointer; font-family: inherit;
-}
+.fab:active { transform: scale(0.95); }
 .movements {
   background: white; border-radius: 14px;
   overflow: hidden; margin-bottom: 16px;
@@ -155,226 +168,252 @@ body {
 .empty-state { text-align: center; padding: 40px 20px; color: #8E8E93; font-size: 13px; }
 .view { display: none; }
 .view.active { display: block; }
-.cat-section {
-  background: white; border-radius: 14px;
-  margin-bottom: 12px; overflow: hidden;
+
+.flujo-table {
+background: white; border-radius: 14px;
+overflow: hidden; margin-bottom: 16px;
 }
-.cat-header {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 12px 14px;
-  border-bottom: 0.5px solid #E5E7EB;
-  background: #F9FAFB;
+.flujo-row {
+display: grid;
+grid-template-columns: 60px 1fr 1fr 1fr;
+gap: 6px;
+padding: 10px 12px;
+border-bottom: 0.5px solid #F2F2F7;
+font-size: 12px;
+align-items: center;
 }
-.cat-header .title { font-size: 13px; font-weight: 600; margin: 0; }
-.cat-header .total { font-size: 12px; color: #6E6E73; }
-.cat-row {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 10px 14px;
-  border-bottom: 0.5px solid #F2F2F7;
-  font-size: 13px;
+.flujo-row:last-child { border-bottom: none; }
+.flujo-row.head {
+background: #F9FAFB;
+font-weight: 600; color: #6E6E73;
+font-size: 10px;
+text-transform: uppercase;
+letter-spacing: 0.3px;
 }
-.cat-row:last-child { border-bottom: none; }
-.cat-row .cat-label { color: #1D1D1F; }
-.cat-row .cat-vals { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-.cat-row .cat-real { font-weight: 500; }
-.cat-row .cat-ppto { font-size: 10px; color: #8E8E93; }
-.mini-bar {
-  height: 3px; width: 60px;
-  background: #F2F2F7;
-  border-radius: 2px;
-  margin-top: 4px; overflow: hidden;
+.flujo-row.actual { background: #FEF3C7; }
+.flujo-row .mes { font-weight: 600; color: #1D1D1F; font-size: 13px; }
+.flujo-row .val { text-align: right; font-variant-numeric: tabular-nums; }
+.flujo-row .saldo { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; color: #042C53; }
+.flujo-row.actual .saldo { color: #92400E; }
+
+.flujo-summary {
+display: grid; grid-template-columns: 1fr 1fr;
+gap: 8px; margin-bottom: 14px;
 }
-.mini-bar > div { height: 100%; }
+.flujo-summary > div {
+background: white; border-radius: 14px;
+padding: 12px;
+}
+.flujo-summary .label {
+font-size: 10px; color: #6E6E73;
+text-transform: uppercase; letter-spacing: 0.3px;
+margin: 0 0 4px;
+}
+.flujo-summary .value {
+font-size: 18px; font-weight: 600; margin: 0;
+color: #042C53;
+}
+.flujo-summary .meta { font-size: 10px; color: #8E8E93; margin: 4px 0 0; }
+
 .modal-backdrop {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.5);
-  display: none; align-items: flex-end; justify-content: center;
-  z-index: 100; animation: fadeIn 0.2s;
+position: fixed; inset: 0;
+background: rgba(0,0,0,0.5);
+display: none; align-items: flex-end; justify-content: center;
+z-index: 100; animation: fadeIn 0.2s;
 }
 .modal-backdrop.show { display: flex; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 .modal {
-  background: white; width: 100%; max-width: 480px;
-  border-radius: 18px 18px 0 0;
-  padding: 20px 20px calc(20px + env(safe-area-inset-bottom));
-  animation: slideUp 0.25s ease-out;
-  max-height: 92vh; overflow-y: auto;
+background: white; width: 100%; max-width: 480px;
+border-radius: 18px 18px 0 0;
+padding: 20px 20px calc(20px + env(safe-area-inset-bottom));
+animation: slideUp 0.25s ease-out;
+max-height: 92vh; overflow-y: auto;
 }
 .modal-header {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 18px;
+display: flex; justify-content: space-between; align-items: center;
+margin-bottom: 18px;
 }
 .modal-title { font-size: 18px; font-weight: 600; margin: 0; }
 .modal-close {
-  background: #F2F2F7; border: none;
-  width: 30px; height: 30px; border-radius: 50%;
-  font-size: 18px; color: #6E6E73; cursor: pointer; font-family: inherit;
+background: #F2F2F7; border: none;
+width: 30px; height: 30px; border-radius: 50%;
+font-size: 18px; color: #6E6E73; cursor: pointer; font-family: inherit;
 }
 .amount-display {
-  text-align: center; padding: 20px 0 24px;
-  border-bottom: 0.5px solid #E5E7EB;
-  margin-bottom: 16px;
+text-align: center; padding: 20px 0 24px;
+border-bottom: 0.5px solid #E5E7EB;
+margin-bottom: 16px;
 }
 .amount-display .currency { font-size: 22px; color: #6E6E73; vertical-align: top; margin-right: 4px; }
 .amount-display .value { font-size: 44px; font-weight: 600; letter-spacing: -1.5px; }
 .amount-display .value.placeholder { color: #C7C7CC; }
 .field { margin-bottom: 14px; }
 .field label {
-  display: block; font-size: 12px; color: #6E6E73;
-  margin-bottom: 6px; font-weight: 500;
+display: block; font-size: 12px; color: #6E6E73;
+margin-bottom: 6px; font-weight: 500;
 }
 .field input, .field select {
-  width: 100%; padding: 12px 14px;
-  border: 1px solid #E5E7EB; border-radius: 12px;
-  font-size: 15px; background: #F9FAFB;
-  font-family: inherit; -webkit-appearance: none; appearance: none;
+width: 100%; padding: 12px 14px;
+border: 1px solid #E5E7EB; border-radius: 12px;
+font-size: 15px; background: #F9FAFB;
+font-family: inherit; -webkit-appearance: none; appearance: none;
 }
 .field input:focus, .field select:focus { outline: none; border-color: #042C53; background: white; }
 .numpad {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 8px; margin-bottom: 16px;
+display: grid; grid-template-columns: repeat(3, 1fr);
+gap: 8px; margin-bottom: 16px;
 }
 .numpad button {
-  padding: 16px 0; font-size: 22px; font-weight: 500;
-  background: #F2F2F7; border: none; border-radius: 12px;
-  cursor: pointer; font-family: inherit; color: #1D1D1F;
+padding: 16px 0; font-size: 22px; font-weight: 500;
+background: #F2F2F7; border: none; border-radius: 12px;
+cursor: pointer; font-family: inherit; color: #1D1D1F;
 }
 .numpad button:active { background: #E5E7EB; }
 .numpad button.action { background: #FFE5E5; color: #C0392B; font-size: 18px; }
 .modal-footer { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
 .btn {
-  padding: 14px; border: none; border-radius: 12px;
-  font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit;
+padding: 14px; border: none; border-radius: 12px;
+font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit;
 }
 .btn-out { background: #C0392B; color: white; }
 .btn-in  { background: #0F6E56; color: white; }
 .btn-out:active, .btn-in:active { transform: scale(0.97); }
 .btn-secondary { background: #F2F2F7; color: #1D1D1F; width: 100%; margin-bottom: 8px; }
 .toast {
-  position: fixed; bottom: 100px; left: 50%;
-  transform: translateX(-50%);
-  background: #1D1D1F; color: white;
-  padding: 12px 20px; border-radius: 100px;
-  font-size: 13px; opacity: 0; pointer-events: none;
-  transition: opacity 0.3s, transform 0.3s; z-index: 200;
+position: fixed; bottom: 100px; left: 50%;
+transform: translateX(-50%);
+background: #1D1D1F; color: white;
+padding: 12px 20px; border-radius: 100px;
+font-size: 13px; opacity: 0; pointer-events: none;
+transition: opacity 0.3s, transform 0.3s; z-index: 200;
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(-10px); }
 .config-section {
-  background: white; border-radius: 14px;
-  padding: 14px; margin-bottom: 12px;
+background: white; border-radius: 14px;
+padding: 14px; margin-bottom: 12px;
 }
 .config-section h3 { font-size: 14px; font-weight: 600; margin: 0 0 10px; }
 .config-row {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 8px 0; border-bottom: 0.5px solid #F2F2F7;
-  font-size: 13px;
+display: flex; justify-content: space-between; align-items: center;
+padding: 8px 0; border-bottom: 0.5px solid #F2F2F7;
+font-size: 13px;
 }
 .config-row:last-child { border: none; }
 .config-row label { color: #6E6E73; flex: 1; }
 .config-row input {
-  width: 110px; text-align: right;
-  padding: 6px 10px; border: 1px solid #E5E7EB;
-  border-radius: 8px; font-size: 13px;
-  background: #F9FAFB; font-family: inherit;
+width: 110px; text-align: right;
+padding: 6px 10px; border: 1px solid #E5E7EB;
+border-radius: 8px; font-size: 13px;
+background: #F9FAFB; font-family: inherit;
 }
 @media (prefers-color-scheme: dark) {
-  body { background: #000; color: #F5F5F7; }
-  .month-selector, .action-btn, .quick-btn, .movements, .modal, .card, .cat-section, .config-section { background: #1C1C1E; color: #F5F5F7; }
-  .modal-close { background: #2C2C2E; color: #F5F5F7; }
-  .field input, .field select, .config-row input { background: #2C2C2E; color: #F5F5F7; border-color: #38383A; }
-  .field input:focus { background: #1C1C1E; }
-  .numpad button { background: #2C2C2E; color: #F5F5F7; }
-  .numpad button:active { background: #38383A; }
-  .movement, .cat-row, .cat-header, .config-row { border-color: #2C2C2E; }
-  .cat-header { background: #161618; }
-  .movement .mov-meta, .empty-state, .field label, .config-row label, .cat-row .cat-ppto, .balance-card .meta { color: #8E8E93; }
-  .bar, .mini-bar { background: #2C2C2E; }
-  .amount-display { border-color: #2C2C2E; }
-  .amount-display .currency, .budget-row .label { color: #8E8E93; }
-  .tabbar { background: rgba(28,28,30,0.95); border-color: #2C2C2E; }
-  .tab.active { color: #5DCAA5; }
+body { background: #000; color: #F5F5F7; }
+.action-btn, .movements, .modal, .cat-list, .config-section, .flujo-table, .flujo-summary > div { background: #1C1C1E; color: #F5F5F7; }
+.modal-close { background: #2C2C2E; color: #F5F5F7; }
+.field input, .field select, .config-row input { background: #2C2C2E; color: #F5F5F7; border-color: #38383A; }
+.field input:focus { background: #1C1C1E; }
+.numpad button { background: #2C2C2E; color: #F5F5F7; }
+.numpad button:active { background: #38383A; }
+.movement, .cat-item, .config-row, .flujo-row { border-color: #2C2C2E; }
+.flujo-row.head { background: #161618; }
+.flujo-row.actual { background: rgba(254, 243, 199, 0.15); }
+.movement .mov-meta, .empty-state, .field label, .config-row label, .header-info, .flujo-summary .label, .flujo-summary .meta { color: #8E8E93; }
+.cat-item .ci-bar { background: #2C2C2E; }
+.amount-display { border-color: #2C2C2E; }
+.amount-display .currency { color: #8E8E93; }
+.tabbar { background: rgba(28,28,30,0.95); border-color: #2C2C2E; }
+.tab.active { color: #5DCAA5; }
+.summary-card.green { background: rgba(29,158,117,0.15); }
+.summary-card.red   { background: rgba(192,57,43,0.15); }
+.flujo-row .saldo { color: #5DCAA5; }
+.flujo-row.actual .saldo { color: #FCD34D; }
+.flujo-summary .value { color: #5DCAA5; }
 }
 </style>
+
 </head>
 <body>
 
 <div class="view active" id="view-home">
   <div class="header">
-    <button class="month-selector" id="monthBtn">
+    <div class="header-info">
       <span id="currentMonth">Mayo 2026</span>
-      <span style="font-size:10px;">▼</span>
-    </button>
+      <span class="day" id="dayCounter"></span>
+    </div>
     <div>
-      <button class="action-btn" onclick="exportToExcel()" title="Exportar a Excel">⤓</button>
+      <button class="action-btn" onclick="switchTab('config')" title="Ajustes">⚙</button>
     </div>
   </div>
 
   <div class="balance-card">
     <p class="label">Saldo actual</p>
-    <p class="amount" id="saldoTotal">$0</p>
+    <p class="amount" id="saldoActual">$0</p>
     <p class="meta" id="saldoMeta">—</p>
-    <div class="balance-stats">
-      <div><p class="stat-label">↓ Ingresos</p><p class="stat-value" id="ingresosMes">$0</p></div>
-      <div><p class="stat-label">↑ Egresos</p><p class="stat-value" id="egresosMes">$0</p></div>
-      <div><p class="stat-label">↗ Flujo</p><p class="stat-value" id="flujoMes">$0</p></div>
+  </div>
+
+  <div class="summary-cards">
+    <div class="summary-card green">
+      <p class="sc-label">↓ Por recibir</p>
+      <p class="sc-value" id="porRecibir">$0</p>
+      <p class="sc-meta" id="porRecibirMeta">—</p>
+    </div>
+    <div class="summary-card red">
+      <p class="sc-label">⏰ Fijos por pagar</p>
+      <p class="sc-value" id="fijosPorPagar">$0</p>
+      <p class="sc-meta" id="fijosPorPagarMeta">—</p>
     </div>
   </div>
 
-  <p class="section-title">Acciones rápidas</p>
-  <div class="quick-actions">
-    <button class="quick-btn" onclick="openModal('Bencina','Bencina','out')">
-      <span class="icon-circle icon-bencina">⛽</span>Bencina
-    </button>
-    <button class="quick-btn" onclick="openModal('','Alimentación','out')">
-      <span class="icon-circle icon-comida">🍱</span>Comida
-    </button>
-    <button class="quick-btn" onclick="openModal('','Salidas / Restaurantes','out')">
-      <span class="icon-circle icon-salidas">🍽️</span>Salida
-    </button>
-    <button class="quick-btn" onclick="openModal('','Otros / Imprevistos','out')">
-      <span class="icon-circle icon-otros">⋯</span>Otros
-    </button>
+  <p class="section-title">Top gastos del mes</p>
+  <div class="cat-list" id="topGastosList">
+    <div class="empty-state">Sin gastos registrados aún.</div>
   </div>
-
-  <p class="section-title">Avance del mes</p>
-  <div class="card">
-    <div class="budget-row"><span class="label">Egresos fijos</span><span class="vals"><span id="fijosReal">$0</span> / <span id="fijosPpto">$0</span></span></div>
-    <div class="bar"><div id="barFijos" style="background:#993C1D; width:0%;"></div></div>
-    <div class="budget-row"><span class="label">Egresos variables</span><span class="vals"><span id="varReal">$0</span> / <span id="varPpto">$0</span></span></div>
-    <div class="bar"><div id="barVar" style="background:#D85A30; width:0%;"></div></div>
-    <div class="budget-row"><span class="label">Ahorro</span><span class="vals"><span id="ahoReal">$0</span> / <span id="ahoPpto">$0</span></span></div>
-    <div class="bar" style="margin-bottom:10px;"><div id="barAho" style="background:#1D9E75; width:0%;"></div></div>
-  </div>
-
-  <div class="movements-header">
-    <p class="section-title">Movimientos recientes</p>
-    <button class="see-all" onclick="switchTab('mov')">Ver todos</button>
-  </div>
-  <div class="movements" id="movsListHome">
-    <div class="empty-state">Sin movimientos aún. Toca un acceso rápido arriba.</div>
-  </div>
-</div>
-
-<div class="view" id="view-presupuesto">
-  <div class="header">
-    <p style="font-size:20px; font-weight:600; margin:0;">Presupuesto</p>
-    <button class="action-btn" onclick="switchTab('config')" title="Editar">⚙</button>
-  </div>
-  <div class="balance-card" style="background: linear-gradient(135deg, #065F46 0%, #047857 100%);">
-    <p class="label">Flujo proyectado del mes</p>
-    <p class="amount" id="flujoProy">$0</p>
-    <p class="meta" id="flujoProyMeta">Si se cumple el presupuesto</p>
-  </div>
-  <div id="presupuestoLista"></div>
 </div>
 
 <div class="view" id="view-mov">
   <div class="header">
-    <p style="font-size:20px; font-weight:600; margin:0;">Movimientos</p>
-    <button class="action-btn" onclick="openModal('','','out')" title="Nuevo">+</button>
+    <div>
+      <p style="font-size:20px; font-weight:600; margin:0;">Movimientos</p>
+      <p style="font-size:12px; color:#8E8E93; margin:2px 0 0;" id="movHeader">Mayo 2026</p>
+    </div>
+    <button class="action-btn" onclick="exportToExcel()" title="Exportar Excel">⤓</button>
+  </div>
+  <div class="summary-cards">
+    <div class="summary-card green">
+      <p class="sc-label">Ingresos</p>
+      <p class="sc-value" id="movIngresos">$0</p>
+    </div>
+    <div class="summary-card red">
+      <p class="sc-label">Egresos</p>
+      <p class="sc-value" id="movEgresos">$0</p>
+    </div>
   </div>
   <div id="movsListFull"></div>
+</div>
+
+<div class="view" id="view-flujo">
+  <div class="header">
+    <p style="font-size:20px; font-weight:600; margin:0;">Flujo de caja 2026</p>
+    <button class="action-btn" onclick="exportToExcel()" title="Exportar Excel">⤓</button>
+  </div>
+
+  <div class="flujo-summary">
+    <div>
+      <p class="label">Saldo actual</p>
+      <p class="value" id="fcSaldoActual">$0</p>
+      <p class="meta">Hoy</p>
+    </div>
+    <div>
+      <p class="label">Proyección Dic</p>
+      <p class="value" id="fcSaldoDic">$0</p>
+      <p class="meta">Si se cumple ppto</p>
+    </div>
+  </div>
+
+  <p class="section-title">Saldo final mes a mes</p>
+  <div class="flujo-table" id="flujoTabla"></div>
 </div>
 
 <div class="view" id="view-config">
@@ -401,6 +440,8 @@ body {
     <button class="btn btn-secondary" style="background:#FFE5E5; color:#C0392B;" onclick="resetData()">🗑 Borrar movimientos</button>
   </div>
 </div>
+
+<button class="fab" onclick="openModal('','','out')" title="Nuevo">+</button>
 
 <div class="modal-backdrop" id="modal">
   <div class="modal" onclick="event.stopPropagation()">
@@ -443,16 +484,18 @@ body {
 
 <nav class="tabbar">
   <button class="tab active" onclick="switchTab('home')" data-tab="home"><span class="ico">🏠</span>Inicio</button>
-  <button class="tab" onclick="switchTab('presupuesto')" data-tab="presupuesto"><span class="ico">📊</span>Presupuesto</button>
   <button class="tab" onclick="switchTab('mov')" data-tab="mov"><span class="ico">📋</span>Movimientos</button>
+  <button class="tab" onclick="switchTab('flujo')" data-tab="flujo"><span class="ico">📈</span>Flujo 2026</button>
   <button class="tab" onclick="switchTab('config')" data-tab="config"><span class="ico">⚙</span>Ajustes</button>
 </nav>
 
 <div class="toast" id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
 <script>
-const STORAGE_KEY = 'nico-finanzas-v2';
+const STORAGE_KEY = 'nico-finanzas-v4';
+const STORAGE_KEY_PREV = 'nico-finanzas-v3';
 
 const PRESUPUESTO_DEFAULT = {
   saldoInicial: 121424,
@@ -460,7 +503,6 @@ const PRESUPUESTO_DEFAULT = {
     { id: 'sueldo',     nombre: 'Sueldo / Honorarios fijos',  ppto: 1280000, obs: 'Mensual recurrente' },
     { id: 'sv',         nombre: 'Saint Venik',                ppto: 200000,  obs: 'Asesoría mensual' },
     { id: 'boya',       nombre: 'Boya / Poya familiar',       ppto: 0,       obs: 'Solo en mayo' },
-    { id: 'auditable',  nombre: 'Préstamo Auditable',         ppto: 333000,  obs: 'Distribución $4M/12' },
     { id: 'otros_in',   nombre: 'Otros ingresos',             ppto: 0,       obs: 'Esporádicos' }
   ],
   fijos: [
@@ -496,7 +538,6 @@ const ICONOS_CAT = {
   'Sueldo / Honorarios fijos':  {icon: '💼', cls: 'icon-ingreso'},
   'Saint Venik':                {icon: '📊', cls: 'icon-ingreso'},
   'Boya / Poya familiar':       {icon: '🎟️', cls: 'icon-ingreso'},
-  'Préstamo Auditable':         {icon: '🏦', cls: 'icon-ingreso'},
   'Otros ingresos':             {icon: '↓',  cls: 'icon-ingreso'},
   'Arriendo depto Viña':        {icon: '🏠', cls: 'icon-fijos'},
   'Crédito automotriz':         {icon: '💳', cls: 'icon-cuotas'},
@@ -521,6 +562,9 @@ const ICONOS_CAT = {
   'Ahorro libre / inversión':   {icon: '💰', cls: 'icon-ahorro'}
 };
 
+const MESES_ABR = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const MESES_FULL = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
 let state = { presupuesto: null, movements: [] };
 let currentAmount = '';
 
@@ -528,14 +572,30 @@ function loadData() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) state = JSON.parse(raw);
+    if (!state.presupuesto) {
+      const oldRaw = localStorage.getItem(STORAGE_KEY_PREV) || localStorage.getItem('nico-finanzas-v2');
+      if (oldRaw) {
+        const oldState = JSON.parse(oldRaw);
+        state = oldState;
+      }
+    }
   } catch(e) {}
   if (!state.presupuesto) state.presupuesto = JSON.parse(JSON.stringify(PRESUPUESTO_DEFAULT));
   if (!state.movements) state.movements = [];
+  if (state.presupuesto.ingresos) {
+    state.presupuesto.ingresos = state.presupuesto.ingresos.filter(i => i.id !== 'auditable');
+  }
 }
 function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 function fmt(n) {
   const v = Math.round(n);
   return (v < 0 ? '-$' : '$') + Math.abs(v).toLocaleString('es-CL');
+}
+function fmtShort(n) {
+  const v = Math.round(n);
+  if (Math.abs(v) >= 1000000) return (v < 0 ? '-' : '') + '$' + (Math.abs(v)/1000000).toFixed(1) + 'M';
+  if (Math.abs(v) >= 1000)    return (v < 0 ? '-' : '') + '$' + Math.round(Math.abs(v)/1000) + 'K';
+  return fmt(v);
 }
 function getCurrentMonthMovs() {
   const now = new Date();
@@ -552,52 +612,90 @@ function getTipoByCatName(catName) {
   if (state.presupuesto.ahorro.some(i => i.nombre === catName))    return 'ahorro';
   return 'variable';
 }
+function getDaysInfo() {
+  const now = new Date();
+  const day = now.getDate();
+  const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+  return { day, lastDay };
+}
+
 function refresh() {
   const monthMovs = getCurrentMonthMovs();
-  const ingresosTot = monthMovs.filter(m => m.direction === 'in').reduce((s,m) => s + m.amount, 0);
-  const fijosTot    = monthMovs.filter(m => m.direction === 'out' && m.tipo === 'fijo').reduce((s,m) => s + m.amount, 0);
-  const varTot      = monthMovs.filter(m => m.direction === 'out' && m.tipo === 'variable').reduce((s,m) => s + m.amount, 0);
-  const ahoTot      = monthMovs.filter(m => m.direction === 'out' && m.tipo === 'ahorro').reduce((s,m) => s + m.amount, 0);
-  const egresosTot  = fijosTot + varTot + ahoTot;
-  const flujo       = ingresosTot - egresosTot;
-  const saldo       = state.presupuesto.saldoInicial + flujo;
+  const ingresosReal  = monthMovs.filter(m => m.direction === 'in').reduce((s,m) => s + m.amount, 0);
+  const fijosReal     = monthMovs.filter(m => m.direction === 'out' && m.tipo === 'fijo').reduce((s,m) => s + m.amount, 0);
+  const varReal       = monthMovs.filter(m => m.direction === 'out' && m.tipo === 'variable').reduce((s,m) => s + m.amount, 0);
+  const ahoReal       = monthMovs.filter(m => m.direction === 'out' && m.tipo === 'ahorro').reduce((s,m) => s + m.amount, 0);
+  const egresosReal   = fijosReal + varReal + ahoReal;
+  const saldoActual   = state.presupuesto.saldoInicial + ingresosReal - egresosReal;
 
-  document.getElementById('saldoTotal').textContent  = fmt(saldo);
-  document.getElementById('saldoMeta').textContent   = `Inicio mes: ${fmt(state.presupuesto.saldoInicial)} · ${monthMovs.length} mov.`;
-  document.getElementById('ingresosMes').textContent = fmt(ingresosTot);
-  document.getElementById('egresosMes').textContent  = fmt(egresosTot);
-  document.getElementById('flujoMes').textContent    = (flujo >= 0 ? '+' : '') + fmt(flujo);
+  const ingresosPpto = state.presupuesto.ingresos.reduce((s,i) => s + i.ppto, 0);
+  const fijosPpto    = state.presupuesto.fijos.reduce((s,i) => s + i.ppto, 0);
+  const porRecibir = Math.max(0, ingresosPpto - ingresosReal);
+  const fijosPorPagar = Math.max(0, fijosPpto - fijosReal);
 
-  const fijosPpto = state.presupuesto.fijos.reduce((s,i) => s + i.ppto, 0);
-  const varPpto   = state.presupuesto.variables.reduce((s,i) => s + i.ppto, 0);
-  const ahoPpto   = state.presupuesto.ahorro.reduce((s,i) => s + i.ppto, 0);
-  const setBar = (id, real, ppto) => {
-    const pct = ppto > 0 ? (real / ppto) * 100 : 0;
-    const el = document.getElementById(id);
-    el.style.width = Math.min(100, pct) + '%';
-    el.classList.toggle('over', pct > 100);
-  };
-  document.getElementById('fijosReal').textContent = fmt(fijosTot);
-  document.getElementById('fijosPpto').textContent = fmt(fijosPpto);
-  setBar('barFijos', fijosTot, fijosPpto);
-  document.getElementById('varReal').textContent = fmt(varTot);
-  document.getElementById('varPpto').textContent = fmt(varPpto);
-  setBar('barVar', varTot, varPpto);
-  document.getElementById('ahoReal').textContent = fmt(ahoTot);
-  document.getElementById('ahoPpto').textContent = fmt(ahoPpto);
-  setBar('barAho', ahoTot, ahoPpto);
+  document.getElementById('saldoActual').textContent = fmt(saldoActual);
+  document.getElementById('saldoMeta').textContent = `Inicio mes ${fmt(state.presupuesto.saldoInicial)} · ${monthMovs.length} mov.`;
+  document.getElementById('porRecibir').textContent = fmt(porRecibir);
+  document.getElementById('porRecibirMeta').textContent = `de ${fmt(ingresosPpto)} ppto`;
+  document.getElementById('fijosPorPagar').textContent = fmt(fijosPorPagar);
+  document.getElementById('fijosPorPagarMeta').textContent = `de ${fmt(fijosPpto)} ppto`;
 
+  const di = getDaysInfo();
+  document.getElementById('dayCounter').textContent = `· Día ${di.day} / ${di.lastDay}`;
+
+  document.getElementById('movIngresos').textContent = fmt(ingresosReal);
+  document.getElementById('movEgresos').textContent  = fmt(egresosReal);
+
+  renderTopGastos();
   renderMovements();
-  renderPresupuesto();
+  renderFlujoCaja();
   renderConfig();
 }
+
+function renderTopGastos() {
+  const monthMovs = getCurrentMonthMovs();
+  const gastosPorCat = {};
+  monthMovs.filter(m => m.direction === 'out').forEach(m => {
+    gastosPorCat[m.cat] = (gastosPorCat[m.cat] || 0) + m.amount;
+  });
+
+  const items = Object.entries(gastosPorCat)
+    .map(([cat, monto]) => ({ cat, monto }))
+    .sort((a, b) => b.monto - a.monto)
+    .slice(0, 7);
+
+  if (items.length === 0) {
+    document.getElementById('topGastosList').innerHTML = '<div class="empty-state">Sin gastos registrados aún.<br><small style="color:#8E8E93">Toca el botón + abajo para registrar uno.</small></div>';
+    return;
+  }
+
+  const totalEgresos = items.reduce((s,i) => s + i.monto, 0);
+  const maxMonto = items[0].monto;
+
+  const html = items.map(({cat, monto}) => {
+    const icon = ICONOS_CAT[cat] || {icon: '·', cls: 'icon-otros'};
+    const pct = (monto / maxMonto) * 100;
+    const pctTotal = (monto / totalEgresos * 100).toFixed(0);
+    return `<div class="cat-item" onclick="openModal('','${cat.replace(/'/g, "\\'")}','out')">
+      <div class="ci-icon ${icon.cls}">${icon.icon}</div>
+      <div class="ci-info">
+        <p class="ci-name">${cat}</p>
+        <div class="ci-bar"><div class="bar-good" style="width:${pct}%; background:#1F2937;"></div></div>
+      </div>
+      <div class="ci-vals">
+        <p class="ci-amount" style="color:#1D1D1F;">${fmt(monto)}</p>
+        <p class="ci-status">${pctTotal}% del mes</p>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('topGastosList').innerHTML = html;
+}
+
 function renderMovements() {
   const monthMovs = getCurrentMonthMovs().slice().reverse();
-  const homeContainer = document.getElementById('movsListHome');
   const fullContainer = document.getElementById('movsListFull');
   if (monthMovs.length === 0) {
-    homeContainer.innerHTML = '<div class="empty-state">Sin movimientos aún. Toca un acceso rápido arriba.</div>';
-    fullContainer.innerHTML = '<div class="movements"><div class="empty-state">Sin movimientos este mes.</div></div>';
+    fullContainer.innerHTML = '<div class="movements"><div class="empty-state">Sin movimientos este mes. Toca el botón + abajo.</div></div>';
     return;
   }
   const renderItem = m => {
@@ -610,40 +708,73 @@ function renderMovements() {
     const amountStr = sign + fmt(m.amount).replace(/^-?\$/, '$');
     return `<div class="movement" onclick="confirmDelete('${m.id}')"><span class="mov-icon ${icon.cls}">${icon.icon}</span><div class="mov-info"><p class="mov-desc">${m.desc || m.cat}</p><p class="mov-meta">${m.cat} · ${day} ${time}</p></div><p class="mov-amount ${cls}">${amountStr}</p></div>`;
   };
-  homeContainer.innerHTML = monthMovs.slice(0, 8).map(renderItem).join('');
   fullContainer.innerHTML = '<div class="movements">' + monthMovs.map(renderItem).join('') + '</div>';
 }
-function renderPresupuesto() {
+
+function renderFlujoCaja() {
+  const now = new Date();
+  const mesActualIdx = now.getMonth();
+  const año = now.getFullYear();
+
   const monthMovs = getCurrentMonthMovs();
-  const realPorCat = (catName) => monthMovs.filter(m => m.cat === catName).reduce((s,m) => s + m.amount, 0);
-  const seccion = (titulo, items, color) => {
-    const totalPpto = items.reduce((s,i) => s + i.ppto, 0);
-    const totalReal = items.reduce((s,i) => s + realPorCat(i.nombre), 0);
-    let html = `<div class="cat-section"><div class="cat-header"><p class="title">${titulo}</p><p class="total">${fmt(totalReal)} / <span style="color:#1D1D1F;font-weight:500;">${fmt(totalPpto)}</span></p></div>`;
-    items.forEach(i => {
-      const real = realPorCat(i.nombre);
-      const pct  = i.ppto > 0 ? Math.min(100, (real / i.ppto) * 100) : (real > 0 ? 100 : 0);
-      const over = i.ppto > 0 && real > i.ppto;
-      const icon = ICONOS_CAT[i.nombre] || {icon: '·', cls: 'icon-otros'};
-      html += `<div class="cat-row"><div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;"><span style="font-size:16px;">${icon.icon}</span><span class="cat-label" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${i.nombre}</span></div><div class="cat-vals"><span class="cat-real">${fmt(real)}</span><span class="cat-ppto">de ${fmt(i.ppto)}</span><div class="mini-bar"><div style="background:${over ? '#DC2626' : color};width:${pct}%"></div></div></div></div>`;
-    });
-    html += '</div>';
-    return html;
-  };
-  const ingPpto = state.presupuesto.ingresos.reduce((s,i) => s + i.ppto, 0);
-  const fijosPpto = state.presupuesto.fijos.reduce((s,i) => s + i.ppto, 0);
-  const varPpto = state.presupuesto.variables.reduce((s,i) => s + i.ppto, 0);
-  const ahoPpto = state.presupuesto.ahorro.reduce((s,i) => s + i.ppto, 0);
-  const flujoProy = ingPpto - fijosPpto - varPpto - ahoPpto;
-  document.getElementById('flujoProy').textContent = (flujoProy >= 0 ? '+' : '') + fmt(flujoProy);
-  document.getElementById('flujoProyMeta').textContent = `Ingresos ${fmt(ingPpto)} − Egresos ${fmt(fijosPpto+varPpto+ahoPpto)}`;
-  let html = '';
-  html += seccion('Ingresos',          state.presupuesto.ingresos,  '#1D9E75');
-  html += seccion('Egresos fijos',     state.presupuesto.fijos,     '#993C1D');
-  html += seccion('Egresos variables', state.presupuesto.variables, '#D85A30');
-  html += seccion('Ahorro',            state.presupuesto.ahorro,    '#0E7490');
-  document.getElementById('presupuestoLista').innerHTML = html;
+  const ingresosReal = monthMovs.filter(m => m.direction === 'in').reduce((s,m) => s + m.amount, 0);
+  const egresosReal  = monthMovs.filter(m => m.direction === 'out').reduce((s,m) => s + m.amount, 0);
+  const saldoActual  = state.presupuesto.saldoInicial + ingresosReal - egresosReal;
+
+  const ingresosPpto = state.presupuesto.ingresos.reduce((s,i) => s + i.ppto, 0);
+  const fijosPpto    = state.presupuesto.fijos.reduce((s,i) => s + i.ppto, 0);
+  const varPpto      = state.presupuesto.variables.reduce((s,i) => s + i.ppto, 0);
+  const ahoPpto      = state.presupuesto.ahorro.reduce((s,i) => s + i.ppto, 0);
+  const egresosPpto  = fijosPpto + varPpto + ahoPpto;
+  const flujoMensualPpto = ingresosPpto - egresosPpto;
+
+  const boyaItem = state.presupuesto.ingresos.find(i => i.id === 'boya');
+  const boyaMonto = boyaItem ? boyaItem.ppto : 0;
+  const flujoSinBoya = flujoMensualPpto - boyaMonto;
+
+  const tabla = [];
+  let saldo = saldoActual;
+  for (let i = mesActualIdx; i < 12; i++) {
+    if (i === mesActualIdx) {
+      const proyectadoFinMes = saldoActual + (ingresosPpto - ingresosReal) - (egresosPpto - egresosReal);
+      tabla.push({
+        mes: MESES_ABR[i],
+        actual: true,
+        ingreso: ingresosReal,
+        egreso: egresosReal,
+        saldo: proyectadoFinMes,
+        nota: 'Proyectado fin de mes'
+      });
+      saldo = proyectadoFinMes;
+    } else {
+      const flujoMes = (i === 4) ? flujoMensualPpto : flujoSinBoya;
+      const ing = (i === 4) ? ingresosPpto : ingresosPpto - boyaMonto;
+      saldo = saldo + flujoMes;
+      tabla.push({
+        mes: MESES_ABR[i],
+        actual: false,
+        ingreso: ing,
+        egreso: egresosPpto,
+        saldo: saldo
+      });
+    }
+  }
+
+  let html = `<div class="flujo-row head"><div>Mes</div><div class="val">Ingreso</div><div class="val">Egreso</div><div class="saldo">Saldo</div></div>`;
+  tabla.forEach(r => {
+    html += `<div class="flujo-row${r.actual ? ' actual' : ''}">
+      <div class="mes">${r.mes}${r.actual ? ' ★' : ''}</div>
+      <div class="val">${fmtShort(r.ingreso)}</div>
+      <div class="val">${fmtShort(r.egreso)}</div>
+      <div class="saldo">${fmtShort(r.saldo)}</div>
+    </div>`;
+  });
+  document.getElementById('flujoTabla').innerHTML = html;
+
+  document.getElementById('fcSaldoActual').textContent = fmt(saldoActual);
+  document.getElementById('fcSaldoDic').textContent = tabla.length > 0 ? fmt(tabla[tabla.length - 1].saldo) : fmt(saldoActual);
 }
+
 function renderConfig() {
   document.getElementById('cfg-saldo').value = state.presupuesto.saldoInicial;
   const renderGrupo = (containerId, items, key) => {
@@ -756,10 +887,10 @@ function exportToExcel() {
     let totalPpto = 0, totalReal = 0;
     items.forEach(i => {
       const real = realPorCat(i.nombre);
-      data.push([i.nombre, i.ppto, real, real - i.ppto, i.ppto > 0 ? real / i.ppto : 0, i.obs || '']);
+      data.push([i.nombre, i.ppto, real, i.ppto - real, i.ppto > 0 ? real / i.ppto : 0, i.obs || '']);
       totalPpto += i.ppto; totalReal += real;
     });
-    data.push(['SUBTOTAL ' + titulo, totalPpto, totalReal, totalReal - totalPpto, totalPpto > 0 ? totalReal / totalPpto : 0]);
+    data.push(['SUBTOTAL ' + titulo, totalPpto, totalReal, totalPpto - totalReal, totalPpto > 0 ? totalReal / totalPpto : 0]);
     data.push([]);
     return [totalPpto, totalReal];
   };
@@ -771,7 +902,7 @@ function exportToExcel() {
   const [ahoP, ahoR] = seccion('AHORRO',            state.presupuesto.ahorro);
   const totEgrP = fijP + varP + ahoP;
   const totEgrR = fijR + varR + ahoR;
-  data.push(['TOTAL EGRESOS', totEgrP, totEgrR, totEgrR - totEgrP]);
+  data.push(['TOTAL EGRESOS', totEgrP, totEgrR, totEgrP - totEgrR]);
   data.push(['FLUJO NETO',    ingP - totEgrP, ingR - totEgrR]);
   data.push(['SALDO FINAL',   state.presupuesto.saldoInicial + (ingP - totEgrP), state.presupuesto.saldoInicial + (ingR - totEgrR)]);
   const ws1 = XLSX.utils.aoa_to_sheet(data);
@@ -817,6 +948,9 @@ function importJson(event) {
       if (!data.presupuesto || !data.movements) throw new Error('Formato inválido');
       if (confirm('¿Reemplazar todos los datos actuales?')) {
         state = data;
+        if (state.presupuesto.ingresos) {
+          state.presupuesto.ingresos = state.presupuesto.ingresos.filter(i => i.id !== 'auditable');
+        }
         saveData(); refresh();
         showToast('Datos restaurados');
       }
@@ -838,16 +972,16 @@ function showToast(msg) {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2000);
 }
-document.getElementById('monthBtn').addEventListener('click', () => {
-  const m = new Date().toLocaleDateString('es-CL', {month:'long', year:'numeric'});
-  showToast('Mostrando ' + m);
-});
 document.getElementById('modal').addEventListener('click', closeModal);
+const now = new Date();
 document.getElementById('currentMonth').textContent =
-  new Date().toLocaleDateString('es-CL', {month:'long', year:'numeric'}).replace(/^./, c => c.toUpperCase());
+  MESES_FULL[now.getMonth()] + ' ' + now.getFullYear();
+document.getElementById('movHeader').textContent =
+  MESES_FULL[now.getMonth()] + ' ' + now.getFullYear();
 
 loadData();
 refresh();
 </script>
+
 </body>
 </html>
